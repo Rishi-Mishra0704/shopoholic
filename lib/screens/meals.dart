@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:shopoholic/models/meal.dart';
+import 'package:shopoholic/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key, required this.title, required this.meals});
@@ -33,7 +34,7 @@ class MealsScreen extends StatelessWidget {
       content = ListView.builder(
         itemCount: meals.length,
         itemBuilder: (context, index) {
-          return Text(meals[index].title);
+          return MealItem(meal: meals[index]);
         },
       );
     }
