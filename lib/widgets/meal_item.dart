@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shopoholic/models/meal.dart';
+import 'package:shopoholic/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({super.key, required this.meal});
   final Meal meal;
+
+  String get complexityText {
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(1);
+  }
+  String get affordText {
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +61,21 @@ class MealItem extends StatelessWidget {
                       height: 12,
                     ),
                     Row(
-                      children: [],
+                      children: [
+                        MealItemTrait(
+                            icon: Icons.schedule,
+                            label: '${meal.duration} mins'),
+                        const SizedBox(width: 12),
+                        MealItemTrait(
+                          icon: Icons.work,
+                          label: complexityText,
+                        ),
+                        const SizedBox(width: 12,),
+                         MealItemTrait(
+                          icon: Icons.attach_money_sharp,
+                          label: affordText,
+                        ),
+                      ],
                     ),
                   ],
                 ),
