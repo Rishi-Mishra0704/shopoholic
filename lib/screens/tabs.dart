@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shopoholic/models/meal.dart';
 
 import 'package:shopoholic/screens/categories.dart';
 import 'package:shopoholic/screens/meals.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
-
+  
   @override
   State<TabsScreen> createState() {
     return _TabsScreenState();
@@ -14,20 +15,30 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
+  final List<Meal> _favMeals = [];
+
 
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
+  void _toggleMealsStatus(Meal meal){
+    final isExisting = _favMeals.contains(meal);
+    if (isExisting) {
+      _favMeals.remove(meal);
+    }else{
 
+    _favMeals.add(meal);
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const CategoriesScreen();
+    Widget activePage = CategoriesScreen(onToggleFav: _toggleMealsStatus,);
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = const MealsScreen(meals: []);
+      activePage =  MealsScreen(meals: _favMeals, onToggleFav: _toggleMealsStatus,);
       activePageTitle = 'Your Favorites';
     }
 
