@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
 import 'package:shopoholic/data/dummy_data.dart';
-import 'package:shopoholic/models/category.dart';
 import 'package:shopoholic/models/meal.dart';
-import 'package:shopoholic/screens/meals.dart';
 import 'package:shopoholic/widgets/category_grid_item.dart';
+import 'package:shopoholic/screens/meals.dart';
+import 'package:shopoholic/models/category.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.onToggleFav,});
+  const CategoriesScreen({
+    super.key,
+    required this.onToggleFav,
+    required this.availableMeals,
+  });
 
-    final void Function(Meal meal) onToggleFav;
-
+  final void Function(Meal meal) onToggleFav;
+  final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
-   final filteredMeals =  dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    final filteredMeals = availableMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
@@ -22,32 +29,29 @@ class CategoriesScreen extends StatelessWidget {
           onToggleFav: onToggleFav,
         ),
       ),
-    );
+    ); // Navigator.push(context, route)
   }
 
   @override
-  Widget build(context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('pick a category'),
+  Widget build(BuildContext context) {
+    return GridView(
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
-      body: GridView(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10),
-        children: [
-          for (final category in availableCategories)
-            CategoryGridItem(
-              category: category,
-              onSelectCategory: () {
-                _selectCategory(context, category);
-              },
-            ),
-        ],
-      ),
+      children: [
+        // availableCategories.map((category) => CategoryGridItem(category: category)).toList()
+        for (final category in availableCategories)
+          CategoryGridItem(
+            category: category,
+            onSelectCategory: () {
+              _selectCategory(context, category);
+            },
+          )
+      ],
     );
   }
 }
