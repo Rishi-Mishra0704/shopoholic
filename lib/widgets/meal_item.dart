@@ -4,13 +4,15 @@ import 'package:shopoholic/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
-  final Meal meal;
+  const MealItem({super.key, required this.meal, required this.onSelectMeal});
 
+  final Meal meal;
+  final void Function(Meal meal) onSelectMeal;
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
         meal.complexity.name.substring(1);
   }
+
   String get affordText {
     return meal.affordability.name[0].toUpperCase() +
         meal.affordability.name.substring(1);
@@ -26,7 +28,9 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(meal);
+        },
         child: Stack(
           children: [
             FadeInImage(
@@ -71,8 +75,10 @@ class MealItem extends StatelessWidget {
                           icon: Icons.work,
                           label: complexityText,
                         ),
-                        const SizedBox(width: 12,),
-                         MealItemTrait(
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        MealItemTrait(
                           icon: Icons.attach_money_sharp,
                           label: affordText,
                         ),

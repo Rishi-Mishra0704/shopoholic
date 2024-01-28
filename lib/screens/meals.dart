@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:shopoholic/models/meal.dart';
+import 'package:shopoholic/screens/meal_details.dart';
 import 'package:shopoholic/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key, required this.title, required this.meals});
   final String title;
   final List<Meal> meals;
+
+  void selectMeal(BuildContext context, Meal meal) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => MealDetailsScreen(meal: meal),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = Center(
@@ -34,7 +44,12 @@ class MealsScreen extends StatelessWidget {
       content = ListView.builder(
         itemCount: meals.length,
         itemBuilder: (context, index) {
-          return MealItem(meal: meals[index]);
+          return MealItem(
+            meal: meals[index],
+            onSelectMeal: (meal) {
+              selectMeal(context, meal);
+            },
+          );
         },
       );
     }
