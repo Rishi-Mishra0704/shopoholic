@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopoholic/models/meal.dart';
 
 import 'package:shopoholic/screens/categories.dart';
+import 'package:shopoholic/screens/filters.dart';
 import 'package:shopoholic/screens/meals.dart';
 import 'package:shopoholic/widgets/main_drawer.dart';
 
@@ -48,11 +49,14 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  void _setScreen(String id){
-    if (id == 'filters') {
-      
-    }else {
-      Navigator.of(context).pop();
+  void _setScreen(String identifier) {
+    Navigator.of(context).pop();
+    if (identifier == 'filters') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const FiltersScreen(),
+        ),
+      );
     }
   }
 
