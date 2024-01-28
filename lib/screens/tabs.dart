@@ -3,6 +3,7 @@ import 'package:shopoholic/models/meal.dart';
 
 import 'package:shopoholic/screens/categories.dart';
 import 'package:shopoholic/screens/meals.dart';
+import 'package:shopoholic/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -66,6 +67,7 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
+      drawer: const MainDrawer(),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
