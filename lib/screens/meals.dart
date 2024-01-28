@@ -5,14 +5,21 @@ import 'package:shopoholic/screens/meal_details.dart';
 import 'package:shopoholic/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meals});
-  final String title;
+  const MealsScreen({
+    super.key,
+    this.title,
+    required this.meals,
+  });
+
+  final String? title;
   final List<Meal> meals;
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealDetailsScreen(meal: meal),
+        builder: (ctx) => MealDetailsScreen(
+          meal: meal,
+        ),
       ),
     );
   }
@@ -24,14 +31,14 @@ class MealsScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'No meals found!',
+            'Uh oh ... nothing here!',
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
           ),
           const SizedBox(height: 16),
           Text(
-            'Try changing your filters.',
+            'Try selecting a different category!',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
@@ -43,20 +50,22 @@ class MealsScreen extends StatelessWidget {
     if (meals.isNotEmpty) {
       content = ListView.builder(
         itemCount: meals.length,
-        itemBuilder: (context, index) {
-          return MealItem(
-            meal: meals[index],
-            onSelectMeal: (meal) {
-              selectMeal(context, meal);
-            },
-          );
-        },
+        itemBuilder: (ctx, index) => MealItem(
+          meal: meals[index],
+          onSelectMeal: (meal) {
+            selectMeal(context, meal);
+          },
+        ),
       );
+    }
+
+    if (title == null) {
+      return content;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );
