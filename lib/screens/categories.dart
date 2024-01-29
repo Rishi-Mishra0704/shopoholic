@@ -9,11 +9,9 @@ import 'package:shopoholic/models/category.dart';
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key,
-    required this.onToggleFav,
     required this.availableMeals,
   });
 
-  final void Function(Meal meal) onToggleFav;
   final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
@@ -26,7 +24,6 @@ class CategoriesScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
-          onToggleFav: onToggleFav,
         ),
       ),
     ); // Navigator.push(context, route)

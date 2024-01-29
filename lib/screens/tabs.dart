@@ -6,6 +6,7 @@ import 'package:shopoholic/screens/categories.dart';
 import 'package:shopoholic/screens/filters.dart';
 import 'package:shopoholic/screens/meals.dart';
 import 'package:shopoholic/provider/meals_provider.dart';
+import 'package:shopoholic/provider/fav_provider.dart';
 import 'package:shopoholic/widgets/main_drawer.dart';
 
 const kInitialFilters = {
@@ -26,7 +27,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
   void _showInfoMessage(String message) {
@@ -36,22 +36,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         content: Text(message),
       ),
     );
-  }
-
-  void _toggleMealFavoriteStatus(Meal meal) {
-    final isExisting = _favoriteMeals.contains(meal);
-
-    if (isExisting) {
-      setState(() {
-        _favoriteMeals.remove(meal);
-      });
-      _showInfoMessage('Meal is no longer a favorite.');
-    } else {
-      setState(() {
-        _favoriteMeals.add(meal);
-        _showInfoMessage('Marked as a favorite!');
-      });
-    }
   }
 
   void _selectPage(int index) {
@@ -97,15 +81,14 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFav: _toggleMealFavoriteStatus,
       availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
+      final favMealsRef = ref.watch(favmMealsProvider);
       activePage = MealsScreen(
-        meals: _favoriteMeals,
-        onToggleFav: _toggleMealFavoriteStatus,
+        meals: favMealsRef,
       );
       activePageTitle = 'Your Favorites';
     }

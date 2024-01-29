@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopoholic/models/meal.dart';
 
-class favMealsNotifier extends StateNotifier<List<Meal>> {
-  favMealsNotifier() : super([]);
+class FavMealsNotifier extends StateNotifier<List<Meal>> {
+  FavMealsNotifier() : super([]);
 
   void toggleMealStatus(Meal meal) {
     final isExisting = state.contains(meal);
@@ -14,6 +14,6 @@ class favMealsNotifier extends StateNotifier<List<Meal>> {
   }
 }
 
-final favmMealsProvider = StateNotifierProvider<favMealsNotifier, List<Meal>>((ref) {
-  return favMealsNotifier();
+final favmMealsProvider = StateNotifierProvider<FavMealsNotifier, List<Meal>>((ref) {
+  return FavMealsNotifier();
 });
