@@ -5,7 +5,7 @@ import 'package:shopoholic/models/meal.dart';
 import 'package:shopoholic/screens/categories.dart';
 import 'package:shopoholic/screens/filters.dart';
 import 'package:shopoholic/screens/meals.dart';
-import 'package:shopoholic/screens/meals_provider.dart';
+import 'package:shopoholic/provider/meals_provider.dart';
 import 'package:shopoholic/widgets/main_drawer.dart';
 
 const kInitialFilters = {
