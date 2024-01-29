@@ -6,7 +6,7 @@ import 'package:shopoholic/widgets/category_grid_item.dart';
 import 'package:shopoholic/screens/meals.dart';
 import 'package:shopoholic/models/category.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({
     super.key,
     required this.availableMeals,
@@ -14,8 +14,13 @@ class CategoriesScreen extends StatelessWidget {
 
   final List<Meal> availableMeals;
 
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = availableMeals
+    final filteredMeals = widget.availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
 
