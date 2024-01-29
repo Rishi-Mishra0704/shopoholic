@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:shopoholic/data/dummy_data.dart';
-import 'package:shopoholic/models/meal.dart';
+// import 'package:shopoholic/models/meal.dart';
 import 'package:shopoholic/screens/categories.dart';
 import 'package:shopoholic/screens/filters.dart';
 import 'package:shopoholic/screens/meals.dart';
@@ -28,15 +28,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
   Map<Filter, bool> _selectedFilters = kInitialFilters;
-
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
 
   void _selectPage(int index) {
     setState(() {

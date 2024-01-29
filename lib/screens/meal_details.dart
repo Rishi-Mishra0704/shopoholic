@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopoholic/models/meal.dart';
+import 'package:shopoholic/provider/fav_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
+class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
@@ -11,14 +12,23 @@ class MealDetailsScreen extends StatelessWidget {
   final Meal meal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),
           actions: [
             IconButton(
               onPressed: () {
-                
+                final wasAdded =
+                    ref.read(favmMealsProvider.notifier).toggleMealStatus(meal);
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(wasAdded
+                        ? 'Meal added to favorites !!!'
+                        : 'Meal removed from favorites !!!'),
+                  ),
+                );
               },
               icon: const Icon(Icons.star),
             ),
